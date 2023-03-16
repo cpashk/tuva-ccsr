@@ -1,14 +1,12 @@
 {{ config(materialized='table',enabled=false) }}
 
-{% set category_query %}
-select distinct 
-    prccsr
-from {{ ref('dxccsr_v2023_1_cleaned_map') }}
-{% endset %}
 
-{% set categories = run_query(category_query) %}
-{% if execute %}
-{% set categories_list = categories.columns[0].values() %}
-{% endif %}
+
+
+
+{% set categories_list = dbt_utils.get_column_values(
+        table=ref("ccsr__procedure_category_map"),
+        column="code"
+) %}
 
 select * from {{ var('procedure') }}
