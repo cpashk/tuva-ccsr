@@ -1,4 +1,4 @@
-{{ config(materialized='ephemeral') }}
+{{ config(materialized='table') }}
 
 select 
     icd_10_pcs as code,
