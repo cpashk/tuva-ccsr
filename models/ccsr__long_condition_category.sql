@@ -1,27 +1,28 @@
 {{ config(materialized='table') }}
 
-with dxccsr_vertical_codes as (
+
+with ccsr__dx_vertical_pivot as (
     
     select * from {{ ref('ccsr__dx_vertical_pivot') }}
 
-), condition_records as (
+), condition as (
     
     select * from {{ var('condition')}}
 
 )
 
 select 
-    condition_records.encounter_id,
-    condition_records.claim_id,
-    condition_records.patient_id,
-    condition_records.code as icd10_code,
-    condition_records.diagnosis_rank,
-    dxccsr_vertical_codes.ccsr_category,
-    dxccsr_vertical_codes.ccsr_category_rank,
-    dxccsr_vertical_codes.is_ip_default_category,
-    dxccsr_vertical_codes.is_op_default_category,
+    condition.encounter_id,
+    condition.claim_id,
+    condition.patient_id,
+    condition.code,
+    condition.diagnosis_rank,
+    ccsr__dx_vertical_pivot.ccsr_category,
+    ccsr__dx_vertical_pivot.ccsr_category_rank,
+    ccsr__dx_vertical_pivot.is_ip_default_category,
+    ccsr__dx_vertical_pivot.is_op_default_category,
     {{ var('dxccsr_version') }} as dxccsr_version
-from condition_records 
-left join dxccsr_vertical_codes using(code)
+from condition 
+left join ccsr__dx_vertical_pivot using(code)
 
     

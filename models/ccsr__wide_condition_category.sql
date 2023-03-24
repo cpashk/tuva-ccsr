@@ -1,14 +1,16 @@
-{{ config(materialized='table') }}
+{{ config(materialized='table', enabled=false) }}
 
 
 {% set categories_list = dbt_utils.get_column_values(
         table=ref("ccsr__dx_vertical_pivot"),
-        column="ccsr_category"
+        column="ccsr_category",
+        order_by="ccsr_category"
 ) %}
 
 
 with bool_ranks as (
 
+    -- bool agg functions will reduce the long table to one row per CCSR category per encounter
     select 
         encounter_id,
         ccsr_category,
@@ -39,11 +41,10 @@ with bool_ranks as (
 
 select distinct
     encounter_id,
+    -- pivot rows into column values for each possible CCSR category
     {% for category in categories_list %}
     sum(case when ccsr_category = '{{ category }}' then dx_code else 0 end) as DXCCSR_{{ category }},
     {% endfor %}
     {{ var('dxccsr_version') }} as dxccsr_version
 from bool_logic
-group by encounter_id,dxccsr_version
-
-
+group by encounter_id, dxccsr_version
