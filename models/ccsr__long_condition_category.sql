@@ -1,6 +1,3 @@
-{{ config(materialized='table') }}
-
-
 with ccsr__dx_vertical_pivot as (
     
     select * from {{ ref('ccsr__dx_vertical_pivot') }}

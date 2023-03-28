@@ -1,15 +1,27 @@
 version: 2
 
 models:
+
+### Intermediate
+
   - name: ccsr__dx_vertical_pivot
+    config:
+      materialized: table
     desription: This is an intermediate model that pivots the DXCCSR's wide-format mapping CSV
       into a long format table. While the seed uses 6 columns to represent the 6 CCSR codes that
       may be present, this generates one row for each CCSR category per ICD code, so up to
       6 rows per code. 
   - name: ccsr__procedure_category_map
+    config:
+      materialized: table
     description: This is an intermediate model that renames some PRCCSR columns to align with other TUVA
       models as well as the `ccsr__dx_vertical_pivot` model.
+  
+### Final
+
   - name: ccsr__long_condition_category
+    config:
+      materialized: table
     description: This model contains a mapping of individual condition ICD-10-CM diagnosis codes to the
       CCSR's clinically meaningful diagnosis categories. Each row represents a mapping of an ICD-10 code
       to a CCSR category. As each ICD-10 code may be mapped to up to 6 categories, it's expected
@@ -19,7 +31,14 @@ models:
       - name: encounter_id
 
   - name: ccsr__wide_condition_category
+    config:
+      materialized: table
   - name: ccsr__singular_condition_category
-  
+    config:
+        materialized: table
   - name: ccsr__long_procedure_category
+    config:
+        materialized: table
   - name: ccsr__wide_condition_category
+    config:
+        materialized: table

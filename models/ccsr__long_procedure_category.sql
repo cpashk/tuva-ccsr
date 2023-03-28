@@ -1,6 +1,3 @@
-{{ config(materialized='table') }}
-
-
 with procedure as (
     
     select * from {{ var('procedure') }}

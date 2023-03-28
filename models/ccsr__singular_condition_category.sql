@@ -1,6 +1,3 @@
-{{ config(materialized='table') }}
-
-
 select 
     claim_id,
     encounter_id,

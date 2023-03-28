@@ -1,6 +1,3 @@
-{{ config(materialized='table') }}
-
-
 {% set categories_list = dbt_utils.get_column_values(
         table=ref("ccsr__procedure_category_map"),
         column="ccsr_category",

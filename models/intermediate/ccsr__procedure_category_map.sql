@@ -1,5 +1,3 @@
-{{ config(materialized='table') }}
-
 select 
     icd_10_pcs as code,
     icd_10_pcs_description,
