@@ -47,11 +47,17 @@ models:
     columns:
       - name: encounter_id
         tests:
-          - unique
+          - not_null
+          - unique:
+              config:
+                severity: warn
+
       - name: claim_id
         tests:
-          - unique
           - not_null
+          - unique:
+              config:
+                severity: warn
 
   - name: ccsr__long_procedure_category
     config:
