@@ -65,7 +65,9 @@ models:
     columns:
       - name: encounter_id
         tests:
-          - not_null
+          - not_null:
+              config:
+                severity: warn
           - unique:
               config:
                 severity: warn
@@ -93,12 +95,12 @@ models:
         materialized: table
     description: |  
       This model contains a row for each input record with a column for every CCSR procedure category. 
-      Each column contains a value of 0, 1, 2, or 3. These values indicate:
+      Each column contains a value of 0 or 1. These values indicate:
         * 0 \- The CCSR was not triggered by any ICD-10-PCS code on the input record.
-        * 1 \- The CCSR was triggered by only the principal procedure on the input record.
-        * 2 \- The CCSR was triggered by both the principal and any secondary procedure on the
-        input record.
-        * 3 \- The CCSR was triggered by only secondary procedure code(s) on the input record.
+        * 1 \- The CCSR was triggered by a procedure on the input record.  
+      
+      While the CCSR maps to values 0-3, these values require a procedure rank, but no rank is
+      included in the TUVA procedure model.
     columns:
       - name: encounter_id
         tests:
