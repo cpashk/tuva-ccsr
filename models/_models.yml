@@ -33,15 +33,10 @@ models:
     columns:
       - name: encounter_id
         tests:
-          - not_null:
+          - unique:
               config:
                 severity: warn
       - name: claim_id
-        tests:
-          - not_null:
-              config:
-                severity: warn
-    
       - name: patient_id
       - name: code
         description: "The ICD-10-CM code for the diagnosis."
@@ -50,7 +45,13 @@ models:
       - name: diagnosis_rank
       - name: ccsr_category
         description: "A CCSR category for the ICD-10-CM code. One ICD-10-CM code may have up
-          6 CCSR categories associated, ordinally ranked by the ccsr_category_rank."
+          6 CCSR categories associated, ordinally ranked by the ccsr_category_rank.
+          The not_null test will fail on this dimension if a record has a `code` that isn't
+          referenced in the CCSR seed file."
+        tests:
+          - not_null:
+              config:
+                severity: warn
       - name: ccsr_category_description
         description: "The description of the CCSR category as provided in the CCSR seed file."
       - name: ccsr_category_rank
@@ -78,10 +79,12 @@ models:
     columns:
       - name: encounter_id
         tests:
-          - unique
-          - not_null:
-              config:
-                severity: warn
+            - unique:
+                config:
+                  severity: warn
+            - not_null:
+                config:
+                  severity: warn
       - name: claim_id
       - name: patient_id
 
@@ -94,19 +97,27 @@ models:
     columns:
       - name: encounter_id
         tests:
+            - unique:
+                config:
+                  severity: warn
+            - not_null:
+                config:
+                  severity: warn
+
+      - name: claim_id
+        tests:
           - not_null:
               config:
                 severity: warn
           - unique:
               config:
                 severity: warn
-      - name: claim_id
-        tests:
-          - not_null
-          - unique:
-              config:
-                severity: warn
       - name: patient_id
+      - name: ccsr_category
+        tests:
+            - not_null:
+                config:
+                  severity: warn
 
   - name: ccsr__long_procedure_category
     description: This model contains a mapping of individual condition ICD-10-PCS procedure codes to the
@@ -120,6 +131,11 @@ models:
         tests:
             - not_null
       - name: patient_id
+      - name: ccsr_category
+        tests:
+            - not_null:
+                config:
+                  severity: warn
 
   - name: ccsr__wide_procedure_category
     config:

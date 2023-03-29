@@ -50,10 +50,7 @@ column_mask = ~proc.columns.isin(['ENCOUNTER_ID', 'PATIENT_ID','PRCCSR_VERSION']
 print(proc.loc[: , column_mask].max().unique())
 print(proc.loc[: , column_mask].min().unique())
 ```
-
 <br/><br/>
-
-
 
 
 ## 🔌  Supported Databases and dbt Versions
