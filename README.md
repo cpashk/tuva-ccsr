@@ -17,7 +17,43 @@ The [Clinical Classications Software Refined (CCSR)](https://hcup-us.ahrq.gov/to
 * **DXCCSR - Output Option 1, Vertical Output File:** `ccsr__long_condition_category`. This table includes description columns provided by the CCSR seed file but not defined in the the SAS program.
 * **DXCCSR - Output Option 2, Horizontal Output File:** `ccsr__wide_condition_category`
 * **DXCCSR - Output Option 3, Optional File with Default Assignment for Principal or First-Listed Diagnosis:** `ccsr__singular_condition_category`
+
+### Notes on Diagnosis Categories & Defaults
+
+Each ICD-10-CM code is mapped to as many as 6 CCSR categories, though 88.3% of all codes are mapped to only one. This means that given record with `m` ICD-10 each with `n` categories, each record  will have m*n rows in the `ccsr__long_condition_category`.
+
+The CCSR's includes a "default category" for each ICD-10-CM code that allows us to reduce each ICD-10-CM code to a single category. The CCSR differentiates between default categories for inpatient and outpatient records, and the SAS script exposes the record type as a configuration option. We expose these as boolean fields in `ccsr__long_condition_category` - `is_ip_default_category` and `is_op_default_category` for inpatient and outpatient, respectively. By default, the dag will run as inpatient data - this can be configured via the `record_type` variable.
+
+ICD-10-PCS codes map to only one category each, and so have no rank or default.
+
+### Notes on Wide Tables
+
+We opted against running test against each of the 500+ columns in the wide tables, and instead validated a sample of output created by generating wide tables from Medicare SAF data. The following validation script was used to ensure no out of band values - 0,1,2,3 for the wide condition table, and 0 or 1 for wide procedures.
+
+```
+import pandas as pd
+
+
+cond = pd.read_csv('wide_condition.csv')
+
+# remove columns that aren't encoded
+column_mask = ~cond.columns.isin(['CLAIM_ID', 'PATIENT_ID','DXCCSR_VERSION'])
+
+print(cond.loc[: , column_mask].max().unique())
+print(cond.loc[: , column_mask].min().unique())
+
+proc = pd.read_csv('wide_proc.csv')
+
+# remove columns that aren't encoded
+column_mask = ~proc.columns.isin(['ENCOUNTER_ID', 'PATIENT_ID','PRCCSR_VERSION'])
+
+print(proc.loc[: , column_mask].max().unique())
+print(proc.loc[: , column_mask].min().unique())
+```
+
 <br/><br/>
+
+
 
 
 ## 🔌  Supported Databases and dbt Versions

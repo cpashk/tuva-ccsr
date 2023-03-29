@@ -24,7 +24,7 @@ with codes as (
         (ccsr_category_{{ i }} = default_ccsr_category_ip) as is_ip_default_category,
         (ccsr_category_{{ i }} = default_ccsr_category_op) as is_op_default_category
     from codes 
-    {{ "union" if not loop.last else "" }}
+    {{ "union all" if not loop.last else "" }}
     {%- endfor %}
 
 )

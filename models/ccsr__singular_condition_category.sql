@@ -7,5 +7,5 @@ select
     {{ var('dxccsr_version') }} as dxccsr_version
  from {{ref('ccsr__long_condition_category')}}
  where 
-    is_ip_default_category = true
+    is_{{ var('record_type', 'ip') }}_default_category = true
     and diagnosis_rank = 1
