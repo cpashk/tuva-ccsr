@@ -9,9 +9,14 @@
 
 ## 🧰  What does this package do?
 
-This package groups the tens of thousands of ICD-10 diagnosis and procedure codes into a few hundred clinically meaninful categories. Our package recreates the functionality defined in HCUP's SAS scripts, [Clinical Classications Software Refined (CCSR)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp).
 
-* overview of output models
+The [Clinical Classications Software Refined (CCSR)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp) SAS programs produce mappings from granular ICD-10 codes to clinically useful categories, and this dbt project creates sql tables mapped according to the same logic. In place of the vertical/horizontal terminology from the CCSR, I've used long/wide in the modern data parlance. Here's how the models relate to the SAS outputs:
+
+* **PRCCSR - Output Option 1, Vertical Output File:** `ccsr__long_procedure_category`. This table includes description columns provided by the CCSR seed file but not defined in the the SAS program.
+* **PRCCSR - Output Option 2, Horizontal Output File:** `ccsr__wide_procedure_category`
+* **DXCCSR - Output Option 1, Vertical Output File:** `ccsr__long_condition_category`. This table includes description columns provided by the CCSR seed file but not defined in the the SAS program.
+* **DXCCSR - Output Option 2, Horizontal Output File:** `ccsr__wide_condition_category`
+* **DXCCSR - Output Option 3, Optional File with Default Assignment for Principal or First-Listed Diagnosis:** `ccsr__singular_condition_category`
 <br/><br/>
 
 

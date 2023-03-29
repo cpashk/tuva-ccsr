@@ -6,6 +6,7 @@ models:
 
   - name: ccsr__dx_vertical_pivot
     config:
+      tags: ccsr
       materialized: table
     desription: This is an intermediate model that pivots the DXCCSR's wide-format mapping CSV
       into a long format table. While the seed uses 6 columns to represent the 6 CCSR codes that
@@ -13,6 +14,7 @@ models:
       6 rows per code. 
   - name: ccsr__procedure_category_map
     config:
+      tags: ccsr
       materialized: table
     description: This is an intermediate model that renames some PRCCSR columns to align with other TUVA
       models as well as the `ccsr__dx_vertical_pivot` model.
@@ -21,6 +23,7 @@ models:
 
   - name: ccsr__long_condition_category
     config:
+      tags: ccsr
       materialized: table
     description: This model contains a mapping of individual condition ICD-10-CM diagnosis codes to the
       CCSR's clinically meaningful diagnosis categories. Each row represents a mapping of an ICD-10 code
@@ -38,8 +41,33 @@ models:
           - not_null:
               config:
                 severity: warn
+    
+      - name: patient_id
+      - name: code
+        description: "The ICD-10-CM code for the diagnosis."
+      - name: code_description
+        description: "The ICD-10-CM code description provided in the CCSR CSV seed file."
+      - name: diagnosis_rank
+      - name: ccsr_category
+        description: "A CCSR category for the ICD-10-CM code. One ICD-10-CM code may have up
+          6 CCSR categories associated, ordinally ranked by the ccsr_category_rank."
+      - name: ccsr_category_description
+        description: "The description of the CCSR category as provided in the CCSR seed file."
+      - name: ccsr_category_rank
+        description: "The ordinal rank of a given CCSR category mapped to an ICD-10-CM code. The
+          CCSR seed CSV has the order of categories assigned to each ICD-10-CM code."
+      - name: is_ip_default_category
+        description: "For each ICD-10-CM code, this field will return true for the CCSR category
+          that is the default value for the code if the underlying record is an inpatient encounter."
+      - name: is_op_default_category
+        description: "For each ICD-10-CM code, this field will return true for the CCSR category
+          that is the default value for the code if the underlying record is an outpatient encounter."
 
   - name: ccsr__wide_condition_category
+    config:
+      tags: ccsr
+      materialized: table
+      enabled: "{{var('wide_condition_enabled', True)}}"
     description: |  
       This model contains a row for each input record with a column for every CCSR condition category. 
       Each column contains a value of 0, 1, 2, or 3. These values indicate:
@@ -47,9 +75,6 @@ models:
         * 1 \- The CCSR was triggered by only the principal (or first-listed) diagnosis on the input record.
         * 2 \- The CCSR was triggered by both the principal (or first-listed) diagnosis and any secondary diagnosis on the input record.
         * 3 \- The CCSR was triggered by only secondary diagnosis code(s) on the input record.
-    config:
-      materialized: table
-      enabled: "{{var('wide_condition_enabled', True)}}"
     columns:
       - name: encounter_id
         tests:
@@ -57,10 +82,13 @@ models:
           - not_null:
               config:
                 severity: warn
+      - name: claim_id
+      - name: patient_id
 
   - name: ccsr__singular_condition_category
     config:
-        materialized: table
+      tags: ccsr
+      materialized: table
     description: This model contains only the CCSR's default category assignment for the ICD-10 code,
       and only for the first-listed ICD-10 code.
     columns:
@@ -72,29 +100,32 @@ models:
           - unique:
               config:
                 severity: warn
-
       - name: claim_id
         tests:
           - not_null
           - unique:
               config:
                 severity: warn
+      - name: patient_id
 
   - name: ccsr__long_procedure_category
     description: This model contains a mapping of individual condition ICD-10-PCS procedure codes to the
       CCSR's clinically meaningful procedure categories. Each row represents a mapping of an ICD-10 code
       to a CCSR category. The model is equivalent to the CCSR's Output Option 1 - Vertical File Output.
     config:
-        materialized: table
+      tags: ccsr
+      materialized: table
     columns:
       - name: encounter_id
         tests:
             - not_null
-    
+      - name: patient_id
+
   - name: ccsr__wide_procedure_category
     config:
-        materialized: table
-        enabled: "{{var('wide_procedure_enabled', True)}}"
+      tags: ccsr
+      materialized: table
+      enabled: "{{var('wide_procedure_enabled', True)}}"
     description: |  
       This model contains a row for each input record with a column for every CCSR procedure category. 
       Each column contains a value of 0 or 1. These values indicate:
@@ -110,3 +141,4 @@ models:
             - not_null:
                 config:
                   severity: warn
+      - name: patient_id
