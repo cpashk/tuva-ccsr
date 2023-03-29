@@ -1,8 +1,9 @@
 select 
-    claim_id,
     encounter_id,
+    claim_id,
     patient_id,
     ccsr_category,
+    ccsr_category_description,
     {{ var('dxccsr_version') }} as dxccsr_version
  from {{ref('ccsr__long_condition_category')}}
  where 

@@ -12,7 +12,7 @@ select distinct
     procedure.encounter_id,
     procedure.patient_id,
     procedure.code,
-    ccsr__procedure_category_map.icd_10_pcs_description,
+    ccsr__procedure_category_map.code_description,
     ccsr__procedure_category_map.ccsr_category,
     ccsr__procedure_category_map.ccsr_description,
     ccsr__procedure_category_map.clinical_domain,

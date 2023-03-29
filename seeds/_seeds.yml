@@ -1,0 +1,6 @@
+version: 2
+
+seeds:
+  - name: dxccsr_v2023_1_cleaned_map
+
+  - name: prccsr_v2023_1_cleaned_map

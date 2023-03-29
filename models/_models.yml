@@ -49,6 +49,7 @@ models:
         * 3 \- The CCSR was triggered by only secondary diagnosis code(s) on the input record.
     config:
       materialized: table
+      enabled: "{{var('wide_condition_enabled', True)}}"
     columns:
       - name: encounter_id
         tests:
@@ -93,6 +94,7 @@ models:
   - name: ccsr__wide_procedure_category
     config:
         materialized: table
+        enabled: "{{var('wide_procedure_enabled', True)}}"
     description: |  
       This model contains a row for each input record with a column for every CCSR procedure category. 
       Each column contains a value of 0 or 1. These values indicate:

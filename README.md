@@ -10,14 +10,17 @@
 ## 🧰  What does this package do?
 
 This package groups the tens of thousands of ICD-10 diagnosis and procedure codes into a few hundred clinically meaninful categories. Our package recreates the functionality defined in HCUP's SAS scripts, [Clinical Classications Software Refined (CCSR)](https://hcup-us.ahrq.gov/toolssoftware/ccsr/ccs_refined.jsp).
+
+* overview of output models
 <br/><br/>
+
 
 ## 🔌  Supported Databases and dbt Versions
 
 This package has been tested on: 
 - Snowflake
 
-This package supports dbt version `1.2.x` or higher.
+This package supports dbt version `1.4.x` or higher.
 <br/><br/>
 
 ## 🙋🏻‍♀️ How is this package maintained and how do I contribute?

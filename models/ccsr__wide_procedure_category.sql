@@ -8,6 +8,7 @@ with dedupe_records as (
 
     select distinct
         encounter_id,
+        patient_id,
         ccsr_category
     from {{ ref('ccsr__long_procedure_category') }} 
 
@@ -15,6 +16,7 @@ with dedupe_records as (
 
 select
     encounter_id,
+    patient_id,
     -- pivot rows into column values for each possible CCSR category
     {% for category in categories_list %}
     -- as we don't rank procedure codes, we encode to 0 or 1 instead of 0-3
@@ -22,4 +24,4 @@ select
     {% endfor %}
     {{ var('prccsr_version') }} as prccsr_version
 from dedupe_records
-group by encounter_id, prccsr_version
+group by encounter_id, patient_id, prccsr_version
