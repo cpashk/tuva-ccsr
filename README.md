@@ -50,27 +50,6 @@ column_mask = ~proc.columns.isin(['ENCOUNTER_ID', 'PATIENT_ID','PRCCSR_VERSION']
 print(proc.loc[: , column_mask].max().unique())
 print(proc.loc[: , column_mask].min().unique())
 ```
-<br/><br/>
-
-
-## 🔌  Supported Databases and dbt Versions
-
-This package has been tested on: 
-- Snowflake
-
-This package supports dbt version `1.4.x` or higher.
-<br/><br/>
-
-## 🙋🏻‍♀️ How is this package maintained and how do I contribute?
-
-The Tuva Project team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the latest version.
-
-Have an opinion on the mappings? Notice any bugs when installing and running the package? If so, we highly encourage and welcome feedback! While we work on a formal process in Github, we can be easily reached in our Slack community.
-<br/><br/>
-
-## 🤝 Join our community!
-
-Join our growing community of healthcare data practitioners in [Slack](https://join.slack.com/t/thetuvaproject/shared_invite/zt-16iz61187-G522Mc2WGA2mHF57e0il0Q)!
 
 ### A Note On CSV Seed Files
 
@@ -102,4 +81,24 @@ for file in FILES:
     df = pd.read_csv(file)
     ccsr_csv_cleaner(df, output_name)
 ```
+<br/><br/>
+
+## 🔌  Supported Databases and dbt Versions
+
+This package has been tested on: 
+- Snowflake
+
+This package supports dbt version `1.4.x` or higher.
+<br/><br/>
+
+## 🙋🏻‍♀️ How is this package maintained and how do I contribute?
+
+The Tuva Project team maintaining this package **only** maintains the latest version of the package. We highly recommend you stay consistent with the latest version.
+
+Have an opinion on the mappings? Notice any bugs when installing and running the package? If so, we highly encourage and welcome feedback! While we work on a formal process in Github, we can be easily reached in our Slack community.
+<br/><br/>
+
+## 🤝 Join our community!
+
+Join our growing community of healthcare data practitioners in [Slack](https://join.slack.com/t/thetuvaproject/shared_invite/zt-16iz61187-G522Mc2WGA2mHF57e0il0Q)!
 
