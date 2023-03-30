@@ -35,7 +35,7 @@ vars:
     prccsr_version: "2023.1"
 
     # These vars enable the wide tables - disabling will exclude wide tables from dbt runs
-    wide_condition_enabled: False
-    wide_procedure_enabled: False
+    wide_condition_enabled: True
+    wide_procedure_enabled: True
 
     record_type: "ip"
