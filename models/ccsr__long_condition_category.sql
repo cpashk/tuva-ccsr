@@ -4,7 +4,7 @@ with ccsr__dx_vertical_pivot as (
 
 ), condition as (
     
-    select * from {{ var('condition')}}
+    select * from {{ source('ccsr', 'condition')}}
 
 )
 

@@ -19,23 +19,21 @@ clean-targets:
 
 
 vars:
-    condition: >
-        {% if var('ccsr_condition_override',none) is not none %}{{var('ccsr_condition_override')}}
-        {%- elif var('core_condition_override',none) is not none %}{{var('core_condition_override')}}
-        {%- else %}{{ref('claims_preprocessing__condition')}}
-        {%- endif %}
-    procedure: >
-        {% if var('ccsr_procedure_override',none) is not none %}{{var('ccsr_procedure_override')}}
-        {%- elif var('core_procedure_override',none) is not none %}{{var('core_procedure_override')}}
-        {%- else %}{{ref('claims_preprocessing__procedure')}}
-        {%- endif %}
 
-    # CCSR Version numbers from HCUP
-    dxccsr_version: "2023.1"
-    prccsr_version: "2023.1"
+    # Set input database, schema, and tables where your data is located
+    input_database: tuva_claims_demo_full
+    input_schema: core
+    
+    input_condition_table: condition
+    input_procedure_table: procedure
 
     # These vars enable the wide tables - disabling will exclude wide tables from dbt runs
     wide_condition_enabled: True
     wide_procedure_enabled: True
 
+    # Set to "ip" for inpatient data or "op" for outpatient data (More info in the README)
     record_type: "ip"
+
+    # CCSR Version numbers from HCUP
+    dxccsr_version: "2023.1"
+    prccsr_version: "2023.1"

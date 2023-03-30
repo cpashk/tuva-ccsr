@@ -46,7 +46,7 @@ select distinct
     patient_id,
     -- pivot rows into column values for each possible CCSR category
     {% for category in categories_list %}
-    sum(case when ccsr_category = '{{ category }}' then dx_code else 0 end) as DXCCSR_{{ category }},
+    sum(case when ccsr_category = '{{ category }}' then dx_code else 0 end) as dxccsr_{{ category }},
     {% endfor %}
     {{ var('dxccsr_version') }} as dxccsr_version
 from bool_logic

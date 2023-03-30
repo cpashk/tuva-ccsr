@@ -1,6 +1,6 @@
 with procedure as (
     
-    select * from {{ var('procedure') }}
+    select * from {{ source('ccsr', 'procedure') }}
 
 ), ccsr__procedure_category_map as (
 
