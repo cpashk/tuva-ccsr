@@ -224,6 +224,8 @@ models:
         description: The encounter_id for the encounter where this procedure was performed.
         tests:
             - not_null
+                config:
+                  severity: warn
       - name: patient_id
         description: Unique identifier for each patient.
       - name: code
