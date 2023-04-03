@@ -48,6 +48,7 @@ select distinct
     {% for category in categories_list %}
     sum(case when ccsr_category = '{{ category }}' then dx_code else 0 end) as dxccsr_{{ category }},
     {% endfor %}
-    {{ var('dxccsr_version') }} as dxccsr_version
+    {{ var('dxccsr_version') }} as dxccsr_version,
+    '{{ dbt_utils.pretty_time(format="%Y-%m-%d %H:%M:%S") }}' as _model_run_time
 from bool_logic
-group by encounter_id, claim_id, patient_id, dxccsr_version
+group by encounter_id, claim_id, patient_id, dxccsr_version, _model_run_time

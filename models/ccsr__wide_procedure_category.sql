@@ -22,6 +22,7 @@ select
     -- as we don't rank procedure codes, we encode to 0 or 1 instead of 0-3
     sum(case when ccsr_category = '{{ category }}' then 1 else 0 end) as prccsr_{{ category|lower }},
     {% endfor %}
-    {{ var('prccsr_version') }} as prccsr_version
+    {{ var('prccsr_version') }} as prccsr_version,
+    '{{ dbt_utils.pretty_time(format="%Y-%m-%d %H:%M:%S") }}' as _model_run_time
 from dedupe_records
-group by encounter_id, patient_id, prccsr_version
+group by encounter_id, patient_id, prccsr_version, _model_run_time

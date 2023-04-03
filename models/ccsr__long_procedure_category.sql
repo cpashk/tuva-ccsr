@@ -16,6 +16,7 @@ select distinct
     ccsr__procedure_category_map.ccsr_category,
     ccsr__procedure_category_map.ccsr_description,
     ccsr__procedure_category_map.clinical_domain,
-    {{ var('prccsr_version') }} as prccsr_version
+    {{ var('prccsr_version') }} as prccsr_version,
+    '{{ dbt_utils.pretty_time(format="%Y-%m-%d %H:%M:%S") }}' as _model_run_time
 from procedure
 left join ccsr__procedure_category_map using(code)
