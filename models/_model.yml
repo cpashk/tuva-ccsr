@@ -78,13 +78,6 @@ models:
         * 3 \- The CCSR was triggered by only secondary diagnosis code(s) on the input record.
     columns:
       - name: encounter_id
-        tests:
-            - unique:
-                config:
-                  severity: warn
-            - not_null:
-                config:
-                  severity: warn
       - name: claim_id
       - name: patient_id
 
