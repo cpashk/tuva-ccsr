@@ -4,7 +4,7 @@ with ccsr__dx_vertical_pivot as (
 
 ), condition as (
     
-    select * from {{ source('ccsr', 'condition') }} limit 100000
+    select * from {{ source('ccsr', 'condition') }}
 
 ), dxccsr_body_systems as (
 

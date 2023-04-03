@@ -1,6 +1,6 @@
 with procedure as (
     
-    select * from {{ source('ccsr', 'procedure') }} limit 10000
+    select * from {{ source('ccsr', 'procedure') }}
 
 ), ccsr__procedure_category_map as (
 
