@@ -31,7 +31,8 @@ with codes as (
 )
 
 select distinct
-    *
+    *,
+    '{{ dbt_utils.pretty_time(format="%Y-%m-%d %H:%M:%S") }}' as _model_run_time
 from long_union
 -- as not all diagnosis codes have multiple categories, we can discard nulls
 where ccsr_category is not null

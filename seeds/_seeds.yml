@@ -12,11 +12,3 @@ seeds:
     description: |
       A table containing descriptions of the top level categories used in the CCSR condition mapper.
       This was manually exctracted from the User Guide PDF included with the DXCCSR SAS program.
-      Note that there is no equivalent model for procedures, as the information is included in the prccsr_v2023_1_cleaned_map file.
-    columns:
-      - name: body_system
-        description: The body system to which each parent category belongs. The 22 body systems generally follow the structure of the ICD-10-CM diagnosis chapters.
-      - name: ccsr_parent_category
-        description: The parent category code for each CCSR category. In practice, this is the three letter prefix to the category code.
-      - name: parent_category_description
-        description: A description of the parent category.
