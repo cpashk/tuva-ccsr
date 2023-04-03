@@ -18,5 +18,5 @@ seeds:
         description: The body system to which each parent category belongs. The 22 body systems generally follow the structure of the ICD-10-CM diagnosis chapters.
       - name: ccsr_parent_category
         description: The parent category code for each CCSR category. In practice, this is the three letter prefix to the category code.
-      - name: description
-        description: A description of the body system.
+      - name: parent_category_description
+        description: A description of the parent category.

@@ -18,6 +18,7 @@ with codes as (
     select 
         code,
         code_description,
+        left(ccsr_category_{{ i }}, 3) as ccsr_parent_category,
         ccsr_category_{{ i }} as ccsr_category,
         ccsr_category_{{ i }}_description as ccsr_category_description,
         {{ i }} as ccsr_category_rank,

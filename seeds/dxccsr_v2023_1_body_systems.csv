@@ -1,4 +1,4 @@
-body_system,ccsr_parent_category,description
+body_system,ccsr_parent_category,parent_category_description
 Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism,BLD,"BLD contains 10 categories that include diseases related to the blood, diseases of blood-forming organs, and certain disorders involving the immune mechanism such as nutritional anemia, sickle cell/trait anemia, and immunity disorders."
 Diseases of the circulatory system,CIR,"CIR contains 39 categories that include diseases of the circulatory system such as essential hypertension, acute myocardial infarction, heart failure, and cerebral infarction."
 Dental diseases (added in v2023.1),DEN,"DEN contains 3 categories that distinguish any dental condition (including traumatic injury), nontraumatic dental conditions (a subset of any dental condition), and caries, periodontitis, and other preventable dental conditions (a subset of nontraumatic dental conditions that are often treated in a dentist’s office)."
