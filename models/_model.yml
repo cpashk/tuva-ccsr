@@ -8,7 +8,7 @@ models:
     config:
       tags: ccsr
       materialized: table
-    desription: |
+    description: |
       This is an intermediate model that pivots the DXCCSR's wide-format mapping CSV
       into a long format table. While the seed uses 6 columns to represent the 6 CCSR codes that
       may be present, this generates one row for each CCSR category per ICD code, so up to
@@ -63,7 +63,8 @@ models:
       - name: ccsr_category_description
         description: A description of the CCSR category.
       - name: clinical_domain
-        description: The clinical domain to which the CCSR code belongs
+        description: The clinical domain to which the CCSR code belongs. Note that the condition models don't have this column, but
+          the `body_system` is a conceptually related column in the condition tables.
       - name: ccsr_parent_category
         description: The CCSR parent category - the three letter prefix for each alphanumeric category.
       - name: _model_run_time
@@ -100,6 +101,7 @@ models:
         data_type: integer
       - name: body_system
         description: The body system to which each parent category belongs. The 22 body systems generally follow the structure of the ICD-10-CM diagnosis chapters.
+          Note that the procedure tables don't have this column, but a conceptually related field in procedure models is `clinical_domain`.
       - name: ccsr_parent_category
         description: The parent category code for each CCSR category. In practice, this is the three letter prefix to the category code.
       - name: parent_category_description
@@ -187,6 +189,7 @@ models:
         description: Unique identifier for each patient.
       - name: body_system
         description: The body system to which each parent category belongs. The 22 body systems generally follow the structure of the ICD-10-CM diagnosis chapters.
+          Note that the procedure tables don't have this column, but a conceptually related field in procedure models is `clinical_domain`.
       - name: ccsr_parent_category
         description: The parent category code for each CCSR category. In practice, this is the three letter prefix to the category code.
       - name: parent_category_description
@@ -196,10 +199,6 @@ models:
           6 CCSR categories associated, ordinally ranked by the ccsr_category_rank.
           The not_null test will fail on this dimension if a record has a `code` that isn't
           referenced in the CCSR seed file."
-        tests:
-          - not_null:
-              config:
-                severity: warn
         tests:
             - not_null:
                 config:
@@ -235,7 +234,8 @@ models:
       - name: ccsr_parent_category
         description: The parent category code for each CCSR category. In practice, this is the three letter prefix to the category code.
       - name: clinical_domain
-        description: The ICD-10-PCS Clinical Domain that the CCSR parent category belongs to.
+        description: The ICD-10-PCS Clinical Domain that the CCSR parent category belongs to. Note that the condition models don't have this column, but
+          the `body_system` is a conceptually related column in the condition tables.
       - name: ccsr_category_description
         description: A description of the clinical domain.
       - name: ccsr_category
